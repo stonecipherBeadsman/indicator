@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <script type="text/javascript">
+
+    function padlength(what) {
+        var output = (what.toString().length == 1) ? "0" + what : what;
+        return output;
+    }
+
+    function displaytime() {
+        //serverdate.setSeconds(serverdate.getSeconds() + 1);
+        //datestring = montharray[serverdate.getMonth()] + " " + padlength(serverdate.getDate()) + ", " + serverdate.getFullYear();
+        //var timestring = padlength(serverdate.getHours()) + ":" + padlength(serverdate.getMinutes()) + ":" + padlength(serverdate.getSeconds());
+
+    var currenttime = Date.now(); 
+    var serverdate = new Date(currenttime).toLocaleTimeString();
+    console.log(serverdate.split(':')[1].split(' ')[0]);
+        document.getElementById("servertime").innerHTML = serverdate;
+        //every other minute
+        /*if(serverdate.split(':')[1].split(' ')[0] % 2 === 0){
+        	document.body.setAttribute("style","background: red");
+        }
+        */
+        //certain time chunck of the hour
+        if(serverdate.split(':')[1].split(' ')[0] >= 54){
+        	document.body.setAttribute("style","background: red");   
+        	document.getElementById("servertime").setAttribute("style","color:green");     	
+        	document.getElementById("message").innerHTML = "";
+        } else {
+        	document.body.setAttribute("style","background: green");        	
+        	document.getElementById("servertime").setAttribute("style","color:red");        	
+        	document.getElementById("message").innerHTML = "";
+        }
+    }
+
+    window.onload = function() {
+        setInterval("displaytime()", 1000);
+    }
+    </script>
+</head>
+
+<body style="background: white">
+    <b style="font-size: 70px"><p id="servertime"></p></b>
+    <div>
+    	<t id="message" style="color: gold; font-weight: bold; font-size: 100px"></t>	
+    </div>
+</body>
+
+</html>

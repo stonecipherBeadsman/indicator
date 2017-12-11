@@ -1,0 +1,1 @@
+start Chrome.exe --app=file:///C:/Users/S_J_Wetzel/Desktop/Josiah/scripts/indicator.html
