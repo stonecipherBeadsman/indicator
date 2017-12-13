@@ -10,29 +10,47 @@
         return output;
     }
 
+    function setTextColor(color){
+        document.getElementById("servertime").setAttribute("style","color:" + color);
+    }
+
+    function setBackgroundColor(color){
+        document.body.setAttribute("style","background: " + color);
+    }
+
+    function setMessage(text){
+        document.getElementById("message").innerHTML = text;
+    }
+
     function displaytime() {
-        //serverdate.setSeconds(serverdate.getSeconds() + 1);
-        //datestring = montharray[serverdate.getMonth()] + " " + padlength(serverdate.getDate()) + ", " + serverdate.getFullYear();
-        //var timestring = padlength(serverdate.getHours()) + ":" + padlength(serverdate.getMinutes()) + ":" + padlength(serverdate.getSeconds());
 
     var currenttime = Date.now(); 
-    var serverdate = new Date(currenttime).toLocaleTimeString();
-    console.log(serverdate.split(':')[1].split(' ')[0]);
-        document.getElementById("servertime").innerHTML = serverdate;
-        //every other minute
-        /*if(serverdate.split(':')[1].split(' ')[0] % 2 === 0){
-        	document.body.setAttribute("style","background: red");
-        }
-        */
+    var localTime = new Date(currenttime).toLocaleTimeString();
+    var hours = parseInt(localTime.split(':')[0].split(' ')[0]);
+    var minutes = parseInt(localTime.split(':')[1].split(' ')[0]);
+    var seconds = parseInt(localTime.split(':')[2].split(' ')[0]);
+    console.log('hours',hours, '\nminutes', minutes, '\nseconds', seconds);
+        document.getElementById("servertime").innerHTML = localTime;
         //certain time chunck of the hour
-        if(serverdate.split(':')[1].split(' ')[0] >= 54){
-        	document.body.setAttribute("style","background: red");   
-        	document.getElementById("servertime").setAttribute("style","color:green");     	
-        	document.getElementById("message").innerHTML = "";
-        } else {
-        	document.body.setAttribute("style","background: green");        	
-        	document.getElementById("servertime").setAttribute("style","color:red");        	
-        	document.getElementById("message").innerHTML = "";
+        if(minutes >= 54){ //happens every hour
+        	setBackgroundColor('red');  
+        	setTextColor('green');    	
+        	setMessage('');
+        } else if (minutes === 0){
+            if(seconds % 2 === 0){
+                setBackgroundColor('white');
+                setTextColor('black');
+                setMessage(''); 
+            } else {
+                setBackgroundColor('black');
+                setTextColor('white');
+                setMessage('');
+            }
+        }
+        else {
+        	setBackgroundColor('green');
+            setTextColor('red');            	
+        	setMessage('');
         }
     }
 
