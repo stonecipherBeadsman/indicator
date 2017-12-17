@@ -4,10 +4,82 @@
 <head>
     <title></title>
     <script type="text/javascript">
-    function padlength(what) {
-        var output = (what.toString().length == 1) ? "0" + what : what;
-        return output;
-    }
+    var hourlyDeviceTime = 54;
+    var forceColor = false;
+    var sleepTime = {
+        backgroundColor: 'blue',
+        textColor: 'yellow',
+        description: 'Time to Sleep',
+        nap: {
+            hour: 12,
+            minutes: 20,
+            meridian: 'PM',
+            description: 'Nap'
+        },
+        bed: {
+            hour: 7,
+            minutes: 45,
+            meridian: 'PM',
+            description: 'Bed'
+        }
+    };
+
+    var eatTime = {
+        backgroundColor: 'yellow',
+        textColor: 'blue',
+        description: 'Time to Eat',
+        breakfast: {
+            hour: 6,
+            minutes: 15,
+            meridian: 'AM',
+            description: 'Breakfast'
+        },
+        secondBreakfast: {
+            hour: 8,
+            minutes: 1,
+            meridian: 'AM',
+            description: 'Second Breakfast'
+        },
+        lunch: {
+            hour: 11,
+            minutes: 20,
+            meridian: 'AM',
+            description: 'Lunch'
+        },
+        dinner: {
+            hour: 4,
+            minutes: 44,
+            meridian: 'PM',
+            description: 'Dinner'
+        }
+    };
+
+    var bathTime = {
+        backgroundColor: 'teal',
+        textColor: 'pink',
+        hour: 5,
+        minutes: 44,
+        meridian: 'PM',
+        description: 'Bath'
+    };
+
+    var activityTime = {
+        backgroundColor: 'pink',
+        textColor: 'teal',
+        hour: 9,
+        minutes: 44,
+        meridian: 'AM',
+        description: 'Activity'
+    };
+
+    var readingTime = {
+        backgroundColor: 'orange',
+        textColor: 'blue',
+        hour: 6,
+        minutes: 44,
+        meridian: 'PM',
+        description: 'Read'
+    };
 
     function setTextColor(color) {
         document.getElementById("servertime").setAttribute("style", "color:" + color);
@@ -21,6 +93,47 @@
         document.getElementById("message").innerHTML = text;
     }
 
+    function getBackgroundColor() {
+        return document.body.style.backgroundColor;
+    }
+
+    function keydown(evt) {
+        if (evt.ctrlKey && evt.shiftKey && evt.keyCode === 83) {
+            var txt;
+            var promptInput = prompt("Input a color to change background,\nInput 'off' to allow the program to choose:", "blue");
+            if (promptInput === null || promptInput === "") {
+                txt = "User cancelled the prompt.";
+            } else if(promptInput === 'off'){
+                forceColor = false;
+            }else {
+                if (promptInput === sleepTime.backgroundColor) {
+                    setTextColor(sleepTime.textColor);
+                    setMessage(sleepTime.description);
+                } else if (promptInput === eatTime.backgroundColor) {
+                    setTextColor(eatTime.textColor);
+                    setMessage(eatTime.description);
+                } else if (promptInput === bathTime.backgroundColor) {
+                    setTextColor(bathTime.textColor);
+                    setMessage(bathTime.description);
+                } else if (promptInput === activityTime.backgroundColor) {
+                    setTextColor(activityTime.textColor);
+                    setMessage(activityTime.description);
+                } else if (promptInput === readingTime.backgroundColor) {
+                    setTextColor(readingTime.textColor);
+                    setMessage(readingTime.description);
+                } else if (promptInput === sleepTime.backgroundColor) {
+                    setTextColor(sleepTime.textColor);
+                    setMessage(sleepTime.description);
+                }
+                setBackgroundColor(promptInput);
+                forceColor = true;
+                console.log(promptInput);
+            }
+        }
+    }
+
+    document.onkeydown = keydown;
+
     function displaytime(isTest, hoursTest, minutesTest, secondsTest, meridianTest) {
 
         var currenttime = Date.now();
@@ -29,7 +142,7 @@
         var minutes = 0;
         var seconds = 0;
         var meridian = '';
-        if(!isTest){
+        if (!isTest) {
             hours = parseInt(localTime.split(':')[0].split(' ')[0]);
             minutes = parseInt(localTime.split(':')[1].split(' ')[0]);
             seconds = parseInt(localTime.split(':')[2].split(' ')[0]);
@@ -38,153 +151,131 @@
             hours = hoursTest;
             minutes = minutesTest;
             seconds = secondsTest;
-            meridian = meridianTest;            
+            meridian = meridianTest;
         }
-
-        var hourlyDeviceTime = 54;
-
-        var sleepTime = {
-            backgroundColor: 'blue',
-            textColor: 'yellow',
-            nap:{
-                hour: 12,
-                minutes: 25,
-                meridian: 'PM',
-                description: 'Nap'
-            },
-            bed:{
-                hour: 7,
-                minutes: 5,
-                meridian: 'PM',
-                description: 'Bed'
-            }
-        };
-
-        var eatTime = {
-            backgroundColor: 'yellow',
-            textColor: 'blue',
-            breakfast: {
-                hour: 6,
-                minutes: 15,
-                meridian: 'AM',
-                description: 'Breakfast'
-            },
-            secondBreakfast:{
-                hour: 8,
-                minutes: 1,
-                meridian: 'AM',
-                description: 'Second Breakfast'                
-            },
-            lunch: {
-                hour: 11,
-                minutes: 20,
-                meridian: 'AM',
-                description: 'Lunch'
-            },
-            dinner: {
-                hour: 4,
-                minutes: 44,
-                meridian: 'PM',
-                description: 'Dinner'
-            }
-        };
-
-        var bathTime = {
-            backgroundColor: 'teal',
-            textColor: 'pink',
-            hour: 5,
-            minutes: 44,
-            meridian: 'PM',
-            description: 'Bath'
-        };
-
-        var activityTime = {
-            backgroundColor: 'pink',
-            textColor: 'teal',
-            hour: 9,
-            minutes: 44,
-            meridian: 'AM',
-            description: 'Activity'
-        };
-
-        var readingTime = {
-            backgroundColor: 'orange',
-            textColor: 'blue',
-            hour: 6,
-            minutes: 44,
-            meridian: 'PM',
-            description: 'Read'
-        };
-
 
         console.log('hours', hours, '\nminutes', minutes, '\nseconds', seconds, '\nmeridian', meridian);
         document.getElementById("servertime").innerHTML = localTime;
         //certain time chunck of the hour
-        if (minutes >= hourlyDeviceTime) { //happens every hour
-            setBackgroundColor('red');
-            setTextColor('green');
-            setMessage('');
-        } else if (minutes === 0) {
-            if (seconds % 2 === 0) {
-                setBackgroundColor('white');
-                setTextColor('black');
-                setMessage('');
-            } else {
-                setBackgroundColor('black');
-                setTextColor('white');
-                setMessage('');
+        if(!forceColor){
+            if (minutes >= hourlyDeviceTime) { //happens every hour
+                if (getBackgroundColor() !== 'red') {
+                    setBackgroundColor('red');
+                    setTextColor('green');
+                    setMessage('');
+                }
+            } else if (minutes === 0) {
+                if (seconds % 2 === 0) {
+                    setBackgroundColor('white');
+                    setTextColor('black');
+                    setMessage('');
+                } else {
+                    setBackgroundColor('black');
+                    setTextColor('white');
+                    setMessage('');
+                }
+                /*Reading Time Before Bed*/
+            } else if (hours === readingTime.hour &&
+                minutes >= readingTime.minutes &&
+                minutes <= readingTime.minutes + 10 &&
+                meridian === readingTime.meridian) {
+                if(getBackgroundColor() !== readingTime.backgroundColor){
+                    setBackgroundColor(readingTime.backgroundColor);
+                    setTextColor(readingTime.textColor);
+                    setMessage(readingTime.description);
+                }
+                /*Nap Time*/
+            } else if (hours === sleepTime.nap.hour &&
+                minutes >= sleepTime.nap.minutes &&
+                minutes <= sleepTime.nap.minutes + (10 * 3) &&
+                meridian === sleepTime.nap.meridian) {
+                if(getBackgroundColor() !== sleepTime.backgroundColor){
+                    setBackgroundColor(sleepTime.backgroundColor);
+                    setTextColor(sleepTime.textColor);
+                    setMessage(sleepTime.nap.description);
+                }
+                /*Bed Time*/
+            } else if (hours === sleepTime.bed.hour &&
+                minutes >= sleepTime.bed.minutes &&
+                minutes <= sleepTime.bed.minutes + (10 * 3) &&
+                meridian === sleepTime.bed.meridian) {
+                if(getBackgroundColor() !== sleepTime.backgroundColor){
+                    setBackgroundColor(sleepTime.backgroundColor);
+                    setTextColor(sleepTime.textColor);
+                    setMessage(sleepTime.bed.description);  
+                }
+                /*Breakfast Time*/
+            } else if (hours === eatTime.breakfast.hour &&
+                minutes >= eatTime.breakfast.minutes &&
+                minutes <= eatTime.breakfast.minutes + (10 * 3) &&
+                meridian === eatTime.breakfast.meridian) {
+                if(getBackgroundColor() !== eatTime.backgroundColor){
+                    setBackgroundColor(eatTime.backgroundColor);
+                    setTextColor(eatTime.textColor);
+                    setMessage(eatTime.breakfast.description);                
+                }
+                
+                /*Second Breakfast Time*/
+            } else if (hours === eatTime.secondBreakfast.hour &&
+                minutes >= eatTime.secondBreakfast.minutes &&
+                minutes <= eatTime.secondBreakfast.minutes + (10 * 3) &&
+                meridian === eatTime.secondBreakfast.meridian) {
+                if(getBackgroundColor() !== eatTime.backgroundColor){
+                    setBackgroundColor(eatTime.backgroundColor);
+                    setTextColor(eatTime.textColor);
+                    setMessage(eatTime.secondBreakfast.description);                
+                }
+                /*Lunch Time*/
+            } else if (hours === eatTime.lunch.hour &&
+                minutes >= eatTime.lunch.minutes &&
+                minutes <= eatTime.lunch.minutes + (10 * 3) &&
+                meridian === eatTime.lunch.meridian) {
+                if(getBackgroundColor() !== eatTime.backgroundColor){
+                    setBackgroundColor(eatTime.backgroundColor);
+                    setTextColor(eatTime.textColor);
+                    setMessage(eatTime.lunch.description);
+                }
+                
+                /*Dinner Time*/
+            } else if (hours === eatTime.dinner.hour &&
+                minutes >= eatTime.dinner.minutes &&
+                minutes <= eatTime.dinner.minutes + 10 &&
+                meridian === eatTime.dinner.meridian) {
+                if(getBackgroundColor() !== eatTime.backgroundColor){
+                    setBackgroundColor(eatTime.backgroundColor);
+                    setTextColor(eatTime.textColor);
+                    setMessage(eatTime.dinner.description);
+                }
+                /*Activity Time*/
+            } else if (hours === activityTime.hour &&
+                minutes >= activityTime.minutes &&
+                minutes <= activityTime.minutes + 10 &&
+                meridian === activityTime.meridian) {
+                if(getBackgroundColor() !== activityTime.backgroundColor){
+                    setBackgroundColor(activityTime.backgroundColor);
+                    setTextColor(activityTime.textColor);
+                    setMessage(activityTime.description);
+                }
+                /*Bath Time*/
+            } else if (hours === bathTime.hour &&
+                minutes >= bathTime.minutes &&
+                minutes <= bathTime.minutes + 10 &&
+                meridian === bathTime.meridian) {
+                if(getBackgroundColor() !== bathTime.backgroundColor){
+                    setBackgroundColor(bathTime.backgroundColor);
+                    setTextColor(bathTime.textColor);
+                    setMessage(bathTime.description);                
+                }
             }
-        /*Reading Time Before Bed*/
-        } else if (hours === readingTime.hour && minutes >= readingTime.minutes && minutes <= readingTime.minutes + 10 && meridian === readingTime.meridian) { 
-            setBackgroundColor(readingTime.backgroundColor);
-            setTextColor(readingTime.textColor);
-            setMessage(readingTime.description);
-        /*Nap Time*/
-        } else if (hours === sleepTime.nap.hour && minutes >= sleepTime.nap.minutes && minutes <= sleepTime.nap.minutes + (10 * 3) && meridian === sleepTime.nap.meridian) {
-            setBackgroundColor(sleepTime.backgroundColor);
-            setTextColor(sleepTime.textColor);
-            setMessage(sleepTime.nap.description);
-        /*Bed Time*/
-        } else if (hours === sleepTime.bed.hour && minutes >= sleepTime.bed.minutes && minutes <= sleepTime.bed.minutes + (10 * 3) && meridian === sleepTime.bed.meridian){
-            setBackgroundColor(sleepTime.backgroundColor);
-            setTextColor(sleepTime.textColor);
-            setMessage(sleepTime.bed.description);
-        /*Breakfast Time*/        
-        } else if (hours === eatTime.breakfast.hour && minutes >= eatTime.breakfast.minutes && minutes <= eatTime.breakfast.minutes + (10 * 3) && meridian === eatTime.breakfast.meridian){
-            setBackgroundColor(eatTime.backgroundColor);
-            setTextColor(eatTime.textColor);
-            setMessage(eatTime.breakfast.description);            
-        /*Second Breakfast Time*/
-        } else if (hours === eatTime.secondBreakfast.hour && minutes >= eatTime.secondBreakfast.minutes && minutes <= eatTime.secondBreakfast.minutes + (10 * 3) && meridian === eatTime.secondBreakfast.meridian){
-            setBackgroundColor(eatTime.backgroundColor);
-            setTextColor(eatTime.textColor);
-            setMessage(eatTime.secondBreakfast.description); 
-        /*Lunch Time*/           
-        } else if (hours === eatTime.lunch.hour && minutes >= eatTime.lunch.minutes && minutes <= eatTime.lunch.minutes + (10  * 3) && meridian === eatTime.lunch.meridian){
-            setBackgroundColor(eatTime.backgroundColor);
-            setTextColor(eatTime.textColor);
-            setMessage(eatTime.lunch.description); 
-        /*Dinner Time*/           
-        } else if (hours === eatTime.dinner.hour && minutes >= eatTime.dinner.minutes && minutes <= eatTime.dinner.minutes + 10 && meridian === eatTime.dinner.meridian){
-            setBackgroundColor(eatTime.backgroundColor);
-            setTextColor(eatTime.textColor);
-            setMessage(eatTime.dinner.description);
-        /*Activity Time*/          
-        } else if (hours === activityTime.hour && minutes >= activityTime.minutes && minutes <= activityTime.minutes + 10 && meridian === activityTime.meridian){
-            setBackgroundColor(activityTime.backgroundColor);
-            setTextColor(activityTime.textColor);
-            setMessage(activityTime.description);
-        /*Bath Time*/         
-        } else if (hours === bathTime.hour && minutes >= bathTime.minutes && minutes <= bathTime.minutes + 10 && meridian === bathTime.meridian){
-            setBackgroundColor(bathTime.backgroundColor);
-            setTextColor(bathTime.textColor);
-            setMessage(bathTime.description);  
-        }
-        /*Default Case*/ 
-        else {
-            setBackgroundColor('green');
-            setTextColor('red');
-            setMessage('');
+            /*Default Case*/
+            else {
+                if (getBackgroundColor() !== 'green') {
+                    setBackgroundColor('green');
+                    setTextColor('red');
+                    setMessage('');
+                    console.log(getBackgroundColor());
+                }
+            }
         }
     }
     //window.open('https://www.youtube.com/watch?v=kdNpQ2R6C5s', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
@@ -199,7 +290,7 @@
         //setInterval("displaytime(true, 4, 46, 0, 'PM')", 1000);
         //setInterval("displaytime(true, 5, 45, 0, 'PM')", 1000);
         //setInterval("displaytime(true, 6, 45, 0, 'PM')", 1000);
-        //setInterval("displaytime(true, 7, 15, 0, 'PM')", 1000);
+        //setInterval("displaytime(true, 7, 45, 0, 'PM')", 1000);
         /*Main Function Call*/
         setInterval("displaytime()", 1000);
     }
