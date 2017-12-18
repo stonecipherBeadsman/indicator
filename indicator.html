@@ -93,19 +93,15 @@
         document.getElementById("message").innerHTML = text;
     }
 
-<<<<<<< HEAD
-    function displaytime(isTest, useSchedule, hoursTest, minutesTest, secondsTest, meridianTest) {
-=======
     function getBackgroundColor() {
         return document.body.style.backgroundColor;
     }
 
     function keydown(evt) {
         if (evt.ctrlKey && evt.shiftKey && evt.keyCode === 83) {
-            var txt;
             var promptInput = prompt("Input a color to change background,\nInput 'off' to allow the program to choose:", "blue");
             if (promptInput === null || promptInput === "") {
-                txt = "User cancelled the prompt.";
+                console.log('canceled');
             } else if(promptInput === 'off'){
                 forceColor = false;
             }else {
@@ -138,7 +134,6 @@
     document.onkeydown = keydown;
 
     function displaytime(isTest, hoursTest, minutesTest, secondsTest, meridianTest) {
->>>>>>> backUp
 
         var currenttime = Date.now();
         var localTime = new Date(currenttime).toLocaleTimeString();
@@ -161,76 +156,6 @@
         console.log('hours', hours, '\nminutes', minutes, '\nseconds', seconds, '\nmeridian', meridian);
         document.getElementById("servertime").innerHTML = localTime;
         //certain time chunck of the hour
-<<<<<<< HEAD
-        
-        if (minutes >= hourlyDeviceTime) { //happens every hour
-            setBackgroundColor('red');
-            setTextColor('green');
-            setMessage('');
-        } else if (minutes === 0) {
-            if (seconds % 2 === 0) {
-                setBackgroundColor('white');
-                setTextColor('black');
-                setMessage('');
-            } else {
-                setBackgroundColor('black');
-                setTextColor('white');
-                setMessage('');
-            }        
-        } else if (useSchedule === undefined || useSchedule == true){
-        	/*Reading Time Before Bed*/
-	         if (hours === readingTime.hour && minutes >= readingTime.minutes && minutes <= readingTime.minutes + 10 && meridian === readingTime.meridian) { 
-	            setBackgroundColor(readingTime.backgroundColor);
-	            setTextColor(readingTime.textColor);
-	            setMessage(readingTime.description);
-	        /*Nap Time*/
-	        } else if (hours === sleepTime.nap.hour && minutes >= sleepTime.nap.minutes && minutes <= sleepTime.nap.minutes + (10 * 3) && meridian === sleepTime.nap.meridian) {
-	            setBackgroundColor(sleepTime.backgroundColor);
-	            setTextColor(sleepTime.textColor);
-	            setMessage(sleepTime.nap.description);
-	        /*Bed Time*/
-	        } else if (hours === sleepTime.bed.hour && minutes >= sleepTime.bed.minutes && minutes <= sleepTime.bed.minutes + (10 * 3) && meridian === sleepTime.bed.meridian){
-	            setBackgroundColor(sleepTime.backgroundColor);
-	            setTextColor(sleepTime.textColor);
-	            setMessage(sleepTime.bed.description);
-	        /*Breakfast Time*/        
-	        } else if (hours === eatTime.breakfast.hour && minutes >= eatTime.breakfast.minutes && minutes <= eatTime.breakfast.minutes + (10 * 3) && meridian === eatTime.breakfast.meridian){
-	            setBackgroundColor(eatTime.backgroundColor);
-	            setTextColor(eatTime.textColor);
-	            setMessage(eatTime.breakfast.description);            
-	        /*Second Breakfast Time*/
-	        } else if (hours === eatTime.secondBreakfast.hour && minutes >= eatTime.secondBreakfast.minutes && minutes <= eatTime.secondBreakfast.minutes + (10 * 3) && meridian === eatTime.secondBreakfast.meridian){
-	            setBackgroundColor(eatTime.backgroundColor);
-	            setTextColor(eatTime.textColor);
-	            setMessage(eatTime.secondBreakfast.description); 
-	        /*Lunch Time*/           
-	        } else if (hours === eatTime.lunch.hour && minutes >= eatTime.lunch.minutes && minutes <= eatTime.lunch.minutes + (10  * 3) && meridian === eatTime.lunch.meridian){
-	            setBackgroundColor(eatTime.backgroundColor);
-	            setTextColor(eatTime.textColor);
-	            setMessage(eatTime.lunch.description); 
-	        /*Dinner Time*/           
-	        } else if (hours === eatTime.dinner.hour && minutes >= eatTime.dinner.minutes && minutes <= eatTime.dinner.minutes + 10 && meridian === eatTime.dinner.meridian){
-	            setBackgroundColor(eatTime.backgroundColor);
-	            setTextColor(eatTime.textColor);
-	            setMessage(eatTime.dinner.description);
-	        /*Activity Time*/          
-	        } else if (hours === activityTime.hour && minutes >= activityTime.minutes && minutes <= activityTime.minutes + 10 && meridian === activityTime.meridian){
-	            setBackgroundColor(activityTime.backgroundColor);
-	            setTextColor(activityTime.textColor);
-	            setMessage(activityTime.description);
-	        /*Bath Time*/         
-	        } else if (hours === bathTime.hour && minutes >= bathTime.minutes && minutes <= bathTime.minutes + 10 && meridian === bathTime.meridian){
-	            setBackgroundColor(bathTime.backgroundColor);
-	            setTextColor(bathTime.textColor);
-	            setMessage(bathTime.description);  
-	        }
-	    }
-        /*Default Case*/ 
-        else {
-            setBackgroundColor('green');
-            setTextColor('red');
-            setMessage('');
-=======
         if(!forceColor){
             if (minutes >= hourlyDeviceTime) { //happens every hour
                 if (getBackgroundColor() !== 'red') {
@@ -350,25 +275,12 @@
                     console.log(getBackgroundColor());
                 }
             }
->>>>>>> backUp
         }
     }
     //window.open('https://www.youtube.com/watch?v=kdNpQ2R6C5s', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
 
     window.onload = function() {
         /*TESTS*/
-<<<<<<< HEAD
-        //setInterval("displaytime(true, true, 6, 15, 0, 'AM')", 1000);
-        //setInterval("displaytime(true, true, 8, 2, 0, 'AM')", 1000);
-        //setInterval("displaytime(true, true, 9, 44, 0, 'AM')", 1000);
-        //setInterval("displaytime(true, true, 11, 26, 0, 'AM')", 1000);
-        //setInterval("displaytime(true, true, 12, 26, 0, 'PM')", 1000);
-        //setInterval("displaytime(true, true, 4, 46, 0, 'PM')", 1000);
-        //setInterval("displaytime(true, true, 5, 45, 0, 'PM')", 1000);
-        //setInterval("displaytime(true, true, 6, 45, 0, 'PM')", 1000);
-        //setInterval("displaytime(true, true, 7, 15, 0, 'PM')", 1000);
-        //setInterval("displaytime(true, false, 7, 15, 0, 'PM')", 1000);
-=======
         //setInterval("displaytime(true, 6, 15, 0, 'AM')", 1000);
         //setInterval("displaytime(true, 8, 2, 0, 'AM')", 1000);
         //setInterval("displaytime(true, 9, 44, 0, 'AM')", 1000);
@@ -378,7 +290,6 @@
         //setInterval("displaytime(true, 5, 45, 0, 'PM')", 1000);
         //setInterval("displaytime(true, 6, 45, 0, 'PM')", 1000);
         //setInterval("displaytime(true, 7, 45, 0, 'PM')", 1000);
->>>>>>> backUp
         /*Main Function Call*/
         setInterval("displaytime()", 1000);
     }
