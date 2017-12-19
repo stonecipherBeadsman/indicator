@@ -150,6 +150,116 @@
         }
     }
 
+    function homeSchedule(hours, minutes, meridian){
+    	/*Reading Time Before Bed*/
+	    if (hours === readingTime.hour &&
+	        minutes >= readingTime.minutes &&
+	        minutes <= readingTime.minutes + 10 &&
+	        meridian === readingTime.meridian) {
+	        if(getBackgroundColor() !== readingTime.backgroundColor ||
+	            getTextMessage() !== readingTime.description){
+	            setBackgroundColor(readingTime.backgroundColor);
+	            setTextColor(readingTime.textColor);
+	            setMessage(readingTime.description);
+	        }
+	        /*Nap Time*/
+	    } else if (hours === sleepTime.nap.hour &&
+	        minutes >= sleepTime.nap.minutes &&
+	        minutes <= sleepTime.nap.minutes + (10 * 3) &&
+	        meridian === sleepTime.nap.meridian) {
+	        if(getBackgroundColor() !== sleepTime.backgroundColor ||
+	            getTextMessage() !== sleepTime.nap.description){
+	            setBackgroundColor(sleepTime.backgroundColor);
+	            setTextColor(sleepTime.textColor);
+	            setMessage(sleepTime.nap.description);
+	        }
+	        /*Bed Time*/
+	    } else if (hours === sleepTime.bed.hour &&
+	        minutes >= sleepTime.bed.minutes &&
+	        minutes <= sleepTime.bed.minutes + (10 * 3) &&
+	        meridian === sleepTime.bed.meridian) {
+	        if(getBackgroundColor() !== sleepTime.backgroundColor ||
+	            getTextMessage() !== sleepTime.bed.description){
+	            setBackgroundColor(sleepTime.backgroundColor);
+	            setTextColor(sleepTime.textColor);
+	            setMessage(sleepTime.bed.description);  
+	        }
+	        /*Breakfast Time*/
+	    } else if (hours === eatTime.breakfast.hour &&
+	        minutes >= eatTime.breakfast.minutes &&
+	        minutes <= eatTime.breakfast.minutes + (10 * 3) &&
+	        meridian === eatTime.breakfast.meridian) {
+	        if(getBackgroundColor() !== eatTime.backgroundColor ||
+	            getTextMessage() !== eatTime.breakfast.description){
+	            setBackgroundColor(eatTime.backgroundColor);
+	            setTextColor(eatTime.textColor);
+	            setMessage(eatTime.breakfast.description);                
+	        }
+	        
+	        /*Second Breakfast Time*/
+	    } else if (hours === eatTime.secondBreakfast.hour &&
+	        minutes >= eatTime.secondBreakfast.minutes &&
+	        minutes <= eatTime.secondBreakfast.minutes + (10 * 3) &&
+	        meridian === eatTime.secondBreakfast.meridian) {
+	        if(getBackgroundColor() !== eatTime.backgroundColor ||
+	            getTextMessage() !== eatTime.secondBreakfast.description){
+	            setBackgroundColor(eatTime.backgroundColor);
+	            setTextColor(eatTime.textColor);
+	            setMessage(eatTime.secondBreakfast.description);                
+	        }
+	        /*Lunch Time*/
+	    } else if (hours === eatTime.lunch.hour &&
+	        minutes >= eatTime.lunch.minutes &&
+	        minutes <= eatTime.lunch.minutes + (10 * 3) &&
+	        meridian === eatTime.lunch.meridian) {
+	        if(getBackgroundColor() !== eatTime.backgroundColor ||
+	            getTextMessage() !== eatTime.lunch.description){
+	            setBackgroundColor(eatTime.backgroundColor);
+	            setTextColor(eatTime.textColor);
+	            setMessage(eatTime.lunch.description);
+	        }
+	        
+	        /*Dinner Time*/
+	    } else if (hours === eatTime.dinner.hour &&
+	        minutes >= eatTime.dinner.minutes &&
+	        minutes <= eatTime.dinner.minutes + 10 &&
+	        meridian === eatTime.dinner.meridian) {
+	        if(getBackgroundColor() !== eatTime.backgroundColor ||
+	            getTextMessage() !== eatTime.dinner.description){
+	            setBackgroundColor(eatTime.backgroundColor);
+	            setTextColor(eatTime.textColor);
+	            setMessage(eatTime.dinner.description);
+	        }
+	        /*Activity Time*/
+	    } else if (hours === activityTime.hour &&
+	        minutes >= activityTime.minutes &&
+	        minutes <= activityTime.minutes + 10 &&
+	        meridian === activityTime.meridian) {
+	        if(getBackgroundColor() !== activityTime.backgroundColor ||
+	            getTextMessage() !== activityTime.description){
+	            setBackgroundColor(activityTime.backgroundColor);
+	            setTextColor(activityTime.textColor);
+	            setMessage(activityTime.description);
+	        }
+	        /*Bath Time*/
+	    } else if (hours === bathTime.hour &&
+	        minutes >= bathTime.minutes &&
+	        minutes <= bathTime.minutes + 10 &&
+	        meridian === bathTime.meridian) {
+	        if(getBackgroundColor() !== bathTime.backgroundColor ||
+	            getTextMessage() !== bathTime.description){
+	            setBackgroundColor(bathTime.backgroundColor);
+	            setTextColor(bathTime.textColor);
+	            setMessage(bathTime.description);                
+	        }
+	     /*Default Case*/
+	 	} else {
+	         if (getBackgroundColor() !== 'green') {
+	         	setBackgroundToDefault();
+	         }
+	     }
+    }
+
     document.onkeydown = keydown;
 
     function displaytime(isTest, hoursTest, minutesTest, secondsTest, meridianTest) {
@@ -193,114 +303,7 @@
                     setMessage('');
                 }
             } else if(homeMode){
-                /*Reading Time Before Bed*/
-	            if (hours === readingTime.hour &&
-	                minutes >= readingTime.minutes &&
-	                minutes <= readingTime.minutes + 10 &&
-	                meridian === readingTime.meridian) {
-	                if(getBackgroundColor() !== readingTime.backgroundColor ||
-	                    getTextMessage() !== readingTime.description){
-	                    setBackgroundColor(readingTime.backgroundColor);
-	                    setTextColor(readingTime.textColor);
-	                    setMessage(readingTime.description);
-	                }
-	                /*Nap Time*/
-	            } else if (hours === sleepTime.nap.hour &&
-	                minutes >= sleepTime.nap.minutes &&
-	                minutes <= sleepTime.nap.minutes + (10 * 3) &&
-	                meridian === sleepTime.nap.meridian) {
-	                if(getBackgroundColor() !== sleepTime.backgroundColor ||
-	                    getTextMessage() !== sleepTime.nap.description){
-	                    setBackgroundColor(sleepTime.backgroundColor);
-	                    setTextColor(sleepTime.textColor);
-	                    setMessage(sleepTime.nap.description);
-	                }
-	                /*Bed Time*/
-	            } else if (hours === sleepTime.bed.hour &&
-	                minutes >= sleepTime.bed.minutes &&
-	                minutes <= sleepTime.bed.minutes + (10 * 3) &&
-	                meridian === sleepTime.bed.meridian) {
-	                if(getBackgroundColor() !== sleepTime.backgroundColor ||
-	                    getTextMessage() !== sleepTime.bed.description){
-	                    setBackgroundColor(sleepTime.backgroundColor);
-	                    setTextColor(sleepTime.textColor);
-	                    setMessage(sleepTime.bed.description);  
-	                }
-	                /*Breakfast Time*/
-	            } else if (hours === eatTime.breakfast.hour &&
-	                minutes >= eatTime.breakfast.minutes &&
-	                minutes <= eatTime.breakfast.minutes + (10 * 3) &&
-	                meridian === eatTime.breakfast.meridian) {
-	                if(getBackgroundColor() !== eatTime.backgroundColor ||
-	                    getTextMessage() !== eatTime.breakfast.description){
-	                    setBackgroundColor(eatTime.backgroundColor);
-	                    setTextColor(eatTime.textColor);
-	                    setMessage(eatTime.breakfast.description);                
-	                }
-	                
-	                /*Second Breakfast Time*/
-	            } else if (hours === eatTime.secondBreakfast.hour &&
-	                minutes >= eatTime.secondBreakfast.minutes &&
-	                minutes <= eatTime.secondBreakfast.minutes + (10 * 3) &&
-	                meridian === eatTime.secondBreakfast.meridian) {
-	                if(getBackgroundColor() !== eatTime.backgroundColor ||
-	                    getTextMessage() !== eatTime.secondBreakfast.description){
-	                    setBackgroundColor(eatTime.backgroundColor);
-	                    setTextColor(eatTime.textColor);
-	                    setMessage(eatTime.secondBreakfast.description);                
-	                }
-	                /*Lunch Time*/
-	            } else if (hours === eatTime.lunch.hour &&
-	                minutes >= eatTime.lunch.minutes &&
-	                minutes <= eatTime.lunch.minutes + (10 * 3) &&
-	                meridian === eatTime.lunch.meridian) {
-	                if(getBackgroundColor() !== eatTime.backgroundColor ||
-	                    getTextMessage() !== eatTime.lunch.description){
-	                    setBackgroundColor(eatTime.backgroundColor);
-	                    setTextColor(eatTime.textColor);
-	                    setMessage(eatTime.lunch.description);
-	                }
-	                
-	                /*Dinner Time*/
-	            } else if (hours === eatTime.dinner.hour &&
-	                minutes >= eatTime.dinner.minutes &&
-	                minutes <= eatTime.dinner.minutes + 10 &&
-	                meridian === eatTime.dinner.meridian) {
-	                if(getBackgroundColor() !== eatTime.backgroundColor ||
-	                    getTextMessage() !== eatTime.dinner.description){
-	                    setBackgroundColor(eatTime.backgroundColor);
-	                    setTextColor(eatTime.textColor);
-	                    setMessage(eatTime.dinner.description);
-	                }
-	                /*Activity Time*/
-	            } else if (hours === activityTime.hour &&
-	                minutes >= activityTime.minutes &&
-	                minutes <= activityTime.minutes + 10 &&
-	                meridian === activityTime.meridian) {
-	                if(getBackgroundColor() !== activityTime.backgroundColor ||
-	                    getTextMessage() !== activityTime.description){
-	                    setBackgroundColor(activityTime.backgroundColor);
-	                    setTextColor(activityTime.textColor);
-	                    setMessage(activityTime.description);
-	                }
-	                /*Bath Time*/
-	            } else if (hours === bathTime.hour &&
-	                minutes >= bathTime.minutes &&
-	                minutes <= bathTime.minutes + 10 &&
-	                meridian === bathTime.meridian) {
-	                if(getBackgroundColor() !== bathTime.backgroundColor ||
-	                    getTextMessage() !== bathTime.description){
-	                    setBackgroundColor(bathTime.backgroundColor);
-	                    setTextColor(bathTime.textColor);
-	                    setMessage(bathTime.description);                
-	                }
-	            }
-	            /*Default Case*/
-	            else {
-	                if (getBackgroundColor() !== 'green') {
-	                	setBackgroundToDefault();
-	                }
-	            }
+                	homeSchedule(hours, minutes, meridian);
 	        }
             /*Default Case*/
             else {
@@ -310,6 +313,7 @@
             }
         }
     }
+
     //window.open('https://www.youtube.com/watch?v=kdNpQ2R6C5s', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
 
     window.onload = function() {
