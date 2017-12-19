@@ -18,7 +18,7 @@
         },
         bed: {
             hour: 7,
-            minutes: 45,
+            minutes: 5,
             meridian: 'PM',
             description: 'Bed'
         }
@@ -93,13 +93,21 @@
         document.getElementById("message").innerHTML = text;
     }
 
+    function getTextMessage(){
+        return document.getElementById("message").innerHtml;
+    }
+
     function getBackgroundColor() {
         return document.body.style.backgroundColor;
     }
 
     function keydown(evt) {
         if (evt.ctrlKey && evt.shiftKey && evt.keyCode === 83) {
-            var promptInput = prompt("Input a color to change background,\nInput 'off' to allow the program to choose:", "blue");
+            var givenValue = 'blue';
+            if(forceColor){
+                givenValue = 'off';
+            }
+            var promptInput = prompt("Input a color to change background,\nInput 'off' to allow the program to choose:", givenValue);
             if (promptInput === null || promptInput === "") {
                 console.log('canceled');
             } else if(promptInput === 'off'){
@@ -178,7 +186,8 @@
                 minutes >= readingTime.minutes &&
                 minutes <= readingTime.minutes + 10 &&
                 meridian === readingTime.meridian) {
-                if(getBackgroundColor() !== readingTime.backgroundColor){
+                if(getBackgroundColor() !== readingTime.backgroundColor ||
+                    getTextMessage() !== readingTime.description){
                     setBackgroundColor(readingTime.backgroundColor);
                     setTextColor(readingTime.textColor);
                     setMessage(readingTime.description);
@@ -188,7 +197,8 @@
                 minutes >= sleepTime.nap.minutes &&
                 minutes <= sleepTime.nap.minutes + (10 * 3) &&
                 meridian === sleepTime.nap.meridian) {
-                if(getBackgroundColor() !== sleepTime.backgroundColor){
+                if(getBackgroundColor() !== sleepTime.backgroundColor ||
+                    getTextMessage() !== sleepTime.nap.description){
                     setBackgroundColor(sleepTime.backgroundColor);
                     setTextColor(sleepTime.textColor);
                     setMessage(sleepTime.nap.description);
@@ -198,7 +208,8 @@
                 minutes >= sleepTime.bed.minutes &&
                 minutes <= sleepTime.bed.minutes + (10 * 3) &&
                 meridian === sleepTime.bed.meridian) {
-                if(getBackgroundColor() !== sleepTime.backgroundColor){
+                if(getBackgroundColor() !== sleepTime.backgroundColor ||
+                    getTextMessage() !== sleepTime.bed.description){
                     setBackgroundColor(sleepTime.backgroundColor);
                     setTextColor(sleepTime.textColor);
                     setMessage(sleepTime.bed.description);  
@@ -208,7 +219,8 @@
                 minutes >= eatTime.breakfast.minutes &&
                 minutes <= eatTime.breakfast.minutes + (10 * 3) &&
                 meridian === eatTime.breakfast.meridian) {
-                if(getBackgroundColor() !== eatTime.backgroundColor){
+                if(getBackgroundColor() !== eatTime.backgroundColor ||
+                    getTextMessage() !== eatTime.breakfast.description){
                     setBackgroundColor(eatTime.backgroundColor);
                     setTextColor(eatTime.textColor);
                     setMessage(eatTime.breakfast.description);                
@@ -219,7 +231,8 @@
                 minutes >= eatTime.secondBreakfast.minutes &&
                 minutes <= eatTime.secondBreakfast.minutes + (10 * 3) &&
                 meridian === eatTime.secondBreakfast.meridian) {
-                if(getBackgroundColor() !== eatTime.backgroundColor){
+                if(getBackgroundColor() !== eatTime.backgroundColor ||
+                    getTextMessage() !== eatTime.secondBreakfast.description){
                     setBackgroundColor(eatTime.backgroundColor);
                     setTextColor(eatTime.textColor);
                     setMessage(eatTime.secondBreakfast.description);                
@@ -229,7 +242,8 @@
                 minutes >= eatTime.lunch.minutes &&
                 minutes <= eatTime.lunch.minutes + (10 * 3) &&
                 meridian === eatTime.lunch.meridian) {
-                if(getBackgroundColor() !== eatTime.backgroundColor){
+                if(getBackgroundColor() !== eatTime.backgroundColor ||
+                    getTextMessage() !== eatTime.lunch.description){
                     setBackgroundColor(eatTime.backgroundColor);
                     setTextColor(eatTime.textColor);
                     setMessage(eatTime.lunch.description);
@@ -240,7 +254,8 @@
                 minutes >= eatTime.dinner.minutes &&
                 minutes <= eatTime.dinner.minutes + 10 &&
                 meridian === eatTime.dinner.meridian) {
-                if(getBackgroundColor() !== eatTime.backgroundColor){
+                if(getBackgroundColor() !== eatTime.backgroundColor ||
+                    getTextMessage() !== eatTime.dinner.description){
                     setBackgroundColor(eatTime.backgroundColor);
                     setTextColor(eatTime.textColor);
                     setMessage(eatTime.dinner.description);
@@ -250,7 +265,8 @@
                 minutes >= activityTime.minutes &&
                 minutes <= activityTime.minutes + 10 &&
                 meridian === activityTime.meridian) {
-                if(getBackgroundColor() !== activityTime.backgroundColor){
+                if(getBackgroundColor() !== activityTime.backgroundColor ||
+                    getTextMessage() !== activityTime.description){
                     setBackgroundColor(activityTime.backgroundColor);
                     setTextColor(activityTime.textColor);
                     setMessage(activityTime.description);
@@ -260,7 +276,8 @@
                 minutes >= bathTime.minutes &&
                 minutes <= bathTime.minutes + 10 &&
                 meridian === bathTime.meridian) {
-                if(getBackgroundColor() !== bathTime.backgroundColor){
+                if(getBackgroundColor() !== bathTime.backgroundColor ||
+                    getTextMessage() !== bathTime.description){
                     setBackgroundColor(bathTime.backgroundColor);
                     setTextColor(bathTime.textColor);
                     setMessage(bathTime.description);                
@@ -289,7 +306,7 @@
         //setInterval("displaytime(true, 4, 46, 0, 'PM')", 1000);
         //setInterval("displaytime(true, 5, 45, 0, 'PM')", 1000);
         //setInterval("displaytime(true, 6, 45, 0, 'PM')", 1000);
-        //setInterval("displaytime(true, 7, 45, 0, 'PM')", 1000);
+        //setInterval("displaytime(true, 7, 35, 0, 'PM')", 1000);
         /*Main Function Call*/
         setInterval("displaytime()", 1000);
     }
