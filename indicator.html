@@ -7,6 +7,7 @@
     var hourlyDeviceTime = 54;
     var forceColor = false;
     var homeMode = true;
+
     var sleepTime = {
         backgroundColor: 'blue',
         textColor: 'yellow',
@@ -80,6 +81,21 @@
         minutes: 44,
         meridian: 'PM',
         description: 'Read'
+    };
+
+    var quietTime = {
+        backgroundColor: 'snow',
+        textColor: 'mintcream',
+        intervals: [{
+            hour: 4,
+            minutes: 45,
+            meridian: 'AM'
+        },{
+            hour: 2,
+            minutes: 45,
+            meridian: 'PM'
+        }],
+        description: 'Quiet Time'
     };
 
     function setTextColor(color) {
@@ -253,7 +269,22 @@
 	            setMessage(bathTime.description);                
 	        }
 	     /*Default Case*/
-	 	} else {
+	 	} else if ((hours === quietTime.intervals[0].hour &&
+            minutes >= quietTime.intervals[0].minutes &&
+            minutes <= quietTime.intervals[0].minutes + 40 &&
+            meridian === quietTime.intervals[0].meridian) ||
+            hours === quietTime.intervals[1].hour &&
+            minutes >= quietTime.intervals[1].minutes &&
+            minutes <= quietTime.intervals[1].minutes + 40 &&
+            meridian === quietTime.intervals[1].meridian) {
+            if(getBackgroundColor() !== quietTime.backgroundColor ||
+                getTextMessage() !== quietTime.description){
+                setBackgroundColor(quietTime.backgroundColor);
+                setTextColor(quietTime.textColor);
+                setMessage(quietTime.description);                
+            }
+         /*Default Case*/
+        } else {
 	         if (getBackgroundColor() !== 'green') {
 	         	setBackgroundToDefault();
 	         }
@@ -318,11 +349,13 @@
 
     window.onload = function() {
         /*TESTS*/
+        //setInterval("displaytime(true, 4, 45, 0, 'AM')", 1000);
         //setInterval("displaytime(true, 6, 15, 0, 'AM')", 1000);
         //setInterval("displaytime(true, 8, 2, 0, 'AM')", 1000);
         //setInterval("displaytime(true, 9, 44, 0, 'AM')", 1000);
         //setInterval("displaytime(true, 11, 26, 0, 'AM')", 1000);
         //setInterval("displaytime(true, 12, 26, 0, 'PM')", 1000);
+        //setInterval("displaytime(true, 2, 45, 0, 'PM')", 1000);
         //setInterval("displaytime(true, 4, 46, 0, 'PM')", 1000);
         //setInterval("displaytime(true, 5, 45, 0, 'PM')", 1000);
         //setInterval("displaytime(true, 6, 45, 0, 'PM')", 1000);
