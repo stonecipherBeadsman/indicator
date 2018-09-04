@@ -98,8 +98,43 @@
         description: 'Quiet Time'
     };
 
-    function setTextColor(color) {
+    function Counter() {
+        var ret = {
+            number: 0,
+            increment: function() {
+                var ret = 0;
+                ret = ++this.number;
+                return ret;
+            },
+            getValue: function() {
+                return this.number;
+            },
+            turnOver: function() {
+                this.number = 0;
+                return this.number;
+            }
+        };
+        return ret;
+    }
+
+    function counterLoop(counter, loopLength) {
+        var ret;
+        if (counter.getValue() > loopLength - 1){
+            counter.turnOver();
+            ret = counter.getValue();
+        } else {
+            ret = counter.getValue();
+            counter.increment();
+        }
+        return ret;
+    }
+
+    function setClockTextColor(color) {
         document.getElementById("servertime").setAttribute("style", "color:" + color);
+    }
+
+    function setMessageTextColor(color){
+        document.getElementById("message").setAttribute("style", "color:" + color);
     }
 
     function setBackgroundColor(color) {
@@ -108,7 +143,7 @@
 
     function setBackgroundToDefault(){
         setBackgroundColor('green');
-        setTextColor('red');
+        setClockTextColor('red');
         setMessage('');
     }
 
@@ -122,6 +157,21 @@
 
     function getBackgroundColor() {
         return document.body.style.backgroundColor;
+    }
+
+    function padNumber(number) {
+        if (number < 10) {
+            return '0' + number.toString();
+        }
+        return number.toString();
+    }
+
+    function isCurrentTimeWithinSceduledRange(hours, minutes, startHour, startMinute, endHour, endMinute){ //returns boolean
+    	if((parseInt(hours.toString() + padNumber(minutes)) >= parseInt(padNumber(startHour) + padNumber(startMinute))) &&
+    		(parseInt(hours.toString() + padNumber(minutes)) <= parseInt(endHour.toString() + endMinute.toString()))){
+    		return true;
+    	}
+    	return false;
     }
 
     function keydown(evt) {
@@ -141,22 +191,22 @@
             	homeMode = true;
             } else {
                 if (promptInput === sleepTime.backgroundColor) {
-                    setTextColor(sleepTime.textColor);
+                    setClockTextColor(sleepTime.textColor);
                     setMessage(sleepTime.description);
                 } else if (promptInput === eatTime.backgroundColor) {
-                    setTextColor(eatTime.textColor);
+                    setClockTextColor(eatTime.textColor);
                     setMessage(eatTime.description);
                 } else if (promptInput === bathTime.backgroundColor) {
-                    setTextColor(bathTime.textColor);
+                    setClockTextColor(bathTime.textColor);
                     setMessage(bathTime.description);
                 } else if (promptInput === activityTime.backgroundColor) {
-                    setTextColor(activityTime.textColor);
+                    setClockTextColor(activityTime.textColor);
                     setMessage(activityTime.description);
                 } else if (promptInput === readingTime.backgroundColor) {
-                    setTextColor(readingTime.textColor);
+                    setClockTextColor(readingTime.textColor);
                     setMessage(readingTime.description);
                 } else if (promptInput === sleepTime.backgroundColor) {
-                    setTextColor(sleepTime.textColor);
+                    setClockTextColor(sleepTime.textColor);
                     setMessage(sleepTime.description);
                 }
                 setBackgroundColor(promptInput);
@@ -175,7 +225,7 @@
 	        if(getBackgroundColor() !== readingTime.backgroundColor ||
 	            getTextMessage() !== readingTime.description){
 	            setBackgroundColor(readingTime.backgroundColor);
-	            setTextColor(readingTime.textColor);
+	            setClockTextColor(readingTime.textColor);
 	            setMessage(readingTime.description);
 	        }
 	        /*Nap Time*/
@@ -186,7 +236,7 @@
 	        if(getBackgroundColor() !== sleepTime.backgroundColor ||
 	            getTextMessage() !== sleepTime.nap.description){
 	            setBackgroundColor(sleepTime.backgroundColor);
-	            setTextColor(sleepTime.textColor);
+	            setClockTextColor(sleepTime.textColor);
 	            setMessage(sleepTime.nap.description);
 	        }
 	        /*Bed Time*/
@@ -197,7 +247,7 @@
 	        if(getBackgroundColor() !== sleepTime.backgroundColor ||
 	            getTextMessage() !== sleepTime.bed.description){
 	            setBackgroundColor(sleepTime.backgroundColor);
-	            setTextColor(sleepTime.textColor);
+	            setClockTextColor(sleepTime.textColor);
 	            setMessage(sleepTime.bed.description);  
 	        }
 	        /*Breakfast Time*/
@@ -208,7 +258,7 @@
 	        if(getBackgroundColor() !== eatTime.backgroundColor ||
 	            getTextMessage() !== eatTime.breakfast.description){
 	            setBackgroundColor(eatTime.backgroundColor);
-	            setTextColor(eatTime.textColor);
+	            setClockTextColor(eatTime.textColor);
 	            setMessage(eatTime.breakfast.description);                
 	        }
 	        
@@ -220,7 +270,7 @@
 	        if(getBackgroundColor() !== eatTime.backgroundColor ||
 	            getTextMessage() !== eatTime.secondBreakfast.description){
 	            setBackgroundColor(eatTime.backgroundColor);
-	            setTextColor(eatTime.textColor);
+	            setClockTextColor(eatTime.textColor);
 	            setMessage(eatTime.secondBreakfast.description);                
 	        }
 	        /*Lunch Time*/
@@ -231,7 +281,7 @@
 	        if(getBackgroundColor() !== eatTime.backgroundColor ||
 	            getTextMessage() !== eatTime.lunch.description){
 	            setBackgroundColor(eatTime.backgroundColor);
-	            setTextColor(eatTime.textColor);
+	            setClockTextColor(eatTime.textColor);
 	            setMessage(eatTime.lunch.description);
 	        }
 	        
@@ -243,7 +293,7 @@
 	        if(getBackgroundColor() !== eatTime.backgroundColor ||
 	            getTextMessage() !== eatTime.dinner.description){
 	            setBackgroundColor(eatTime.backgroundColor);
-	            setTextColor(eatTime.textColor);
+	            setClockTextColor(eatTime.textColor);
 	            setMessage(eatTime.dinner.description);
 	        }
 	        /*Activity Time*/
@@ -254,7 +304,7 @@
 	        if(getBackgroundColor() !== activityTime.backgroundColor ||
 	            getTextMessage() !== activityTime.description){
 	            setBackgroundColor(activityTime.backgroundColor);
-	            setTextColor(activityTime.textColor);
+	            setClockTextColor(activityTime.textColor);
 	            setMessage(activityTime.description);
 	        }
 	        /*Bath Time*/
@@ -265,22 +315,19 @@
 	        if(getBackgroundColor() !== bathTime.backgroundColor ||
 	            getTextMessage() !== bathTime.description){
 	            setBackgroundColor(bathTime.backgroundColor);
-	            setTextColor(bathTime.textColor);
+	            setClockTextColor(bathTime.textColor);
 	            setMessage(bathTime.description);                
 	        }
 	     /*Default Case*/
-	 	} else if ((hours === quietTime.intervals[0].hour &&
-            minutes >= quietTime.intervals[0].minutes &&
-            minutes <= quietTime.intervals[0].minutes + 40 &&
-            meridian === quietTime.intervals[0].meridian) ||
+	 	} else if ((isCurrentTimeWithinSceduledRange(hours, minutes, quietTime.intervals[0].hour, quietTime.intervals[0].minutes, quietTime.intervals[0].hour + 1, 25) ||
             hours === quietTime.intervals[1].hour &&
             minutes >= quietTime.intervals[1].minutes &&
             minutes <= quietTime.intervals[1].minutes + 40 &&
-            meridian === quietTime.intervals[1].meridian) {
+            meridian === quietTime.intervals[1].meridian)) {
             if(getBackgroundColor() !== quietTime.backgroundColor ||
                 getTextMessage() !== quietTime.description){
                 setBackgroundColor(quietTime.backgroundColor);
-                setTextColor(quietTime.textColor);
+                setClockTextColor(quietTime.textColor);
                 setMessage(quietTime.description);                
             }
          /*Default Case*/
@@ -292,6 +339,7 @@
     }
 
     document.onkeydown = keydown;
+    var counter = new Counter();
 
     function displaytime(isTest, hoursTest, minutesTest, secondsTest, meridianTest) {
 
@@ -320,18 +368,27 @@
             if (minutes >= hourlyDeviceTime) { //happens every hour
                 if (getBackgroundColor() !== 'red') {
                     setBackgroundColor('red');
-                    setTextColor('green');
+                    setClockTextColor('green');
                     setMessage('');
                 }
             } else if (minutes === 0) {
                 if (seconds % 2 === 0) {
                     setBackgroundColor('white');
-                    setTextColor('black');
+                    setClockTextColor('black');
                     setMessage('');
                 } else {
                     setBackgroundColor('black');
-                    setTextColor('white');
+                    setClockTextColor('white');
                     setMessage('');
+                }
+            } else if (minutes === 1) {
+                    setBackgroundColor('aliceblue');
+                    setClockTextColor('snow');
+                    setMessageTextColor('snow');
+                    if (counterLoop(counter, 10) < 5) {
+                    setMessage('in');
+                } else {
+                    setMessage('out');
                 }
             } else if(homeMode){
                 	homeSchedule(hours, minutes, meridian);
@@ -346,10 +403,11 @@
     }
 
     //window.open('https://www.youtube.com/watch?v=kdNpQ2R6C5s', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
+    //https://html-color-codes.info/color-names/
 
     window.onload = function() {
         /*TESTS*/
-        //setInterval("displaytime(true, 4, 45, 0, 'AM')", 1000);
+        //setInterval("displaytime(true, 5, 1, 0, 'AM')", 1000);
         //setInterval("displaytime(true, 6, 15, 0, 'AM')", 1000);
         //setInterval("displaytime(true, 8, 2, 0, 'AM')", 1000);
         //setInterval("displaytime(true, 9, 44, 0, 'AM')", 1000);
@@ -359,7 +417,7 @@
         //setInterval("displaytime(true, 4, 46, 0, 'PM')", 1000);
         //setInterval("displaytime(true, 5, 45, 0, 'PM')", 1000);
         //setInterval("displaytime(true, 6, 45, 0, 'PM')", 1000);
-        //setInterval("displaytime(true, 7, 35, 0, 'PM')", 1000);
+        //setInterval("displaytime(true, 7, 1, 0, 'PM')", 1000);
         /*Main Function Call*/
         setInterval("displaytime()", 1000);
     }

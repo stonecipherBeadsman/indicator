@@ -1,1 +1,1 @@
-start Chrome.exe --app=file:///C:\Users\jwetzel\Desktop\Indicator\indicator\indicator.html
+start Chrome.exe --app=file:///C:\niscdev\Daily\Indicator\indicator\indicator.html
