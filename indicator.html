@@ -7,6 +7,7 @@
     var hourlyDeviceTime = 54;
     var forceColor = false;
     var homeMode = true;
+    var breathMode = false;
 
     var sleepTime = {
         backgroundColor: 'blue',
@@ -104,6 +105,7 @@
             increment: function() {
                 var ret = 0;
                 ret = ++this.number;
+                console.log(ret);
                 return ret;
             },
             getValue: function() {
@@ -111,21 +113,28 @@
             },
             turnOver: function() {
                 this.number = 0;
+                console.log(this.number);
                 return this.number;
             }
         };
         return ret;
     }
 
-    function counterLoop(counter, loopLength) {
+    function isInBreath(counter, loopLength) {
         var ret;
-        if (counter.getValue() > loopLength - 1){
+        console.log('counter.getValue() : ' + counter.getValue(), counter.getValue() >= loopLength-1);
+      
+        if (counter.getValue() >= loopLength-1){
             counter.turnOver();
-            ret = counter.getValue();
-        } else {
-            ret = counter.getValue();
+            return false;
+        } else if (counter.getValue() < (loopLength/2)){
             counter.increment();
+            return true;
+        } else {
+            counter.increment();
+            return false;
         }
+        console.log(ret);
         return ret;
     }
 
@@ -180,15 +189,25 @@
             if(forceColor){
                 givenValue = 'off';
             }
-            var promptInput = prompt("Input a color to change background,\nInput 'off' to allow the program to choose:", givenValue);
+            var promptInput = prompt("Input a color to change background\n'off' to allow the program to choose\n'home', 'work', or 'breath' for those modes:", givenValue);
             if (promptInput === null || promptInput === "") {
                 console.log('canceled');
             } else if(promptInput === 'off'){
+                homeMode = true;
                 forceColor = false;
+                breathMode = false;
             } else if(promptInput === 'work'){
             	homeMode = false;
+                breathMode = false;
+                forceColor = false;
             } else if(promptInput === 'home'){
             	homeMode = true;
+                breathMode = false;
+                forceColor = false;
+            } else if (promptInput === 'breath') {
+                breathMode = true;
+                homeMode = false;
+                forceColor = false;
             } else {
                 if (promptInput === sleepTime.backgroundColor) {
                     setClockTextColor(sleepTime.textColor);
@@ -340,6 +359,7 @@
 
     document.onkeydown = keydown;
     var counter = new Counter();
+    const breathCycleLengthSec = 16;
 
     function displaytime(isTest, hoursTest, minutesTest, secondsTest, meridianTest) {
 
@@ -361,7 +381,7 @@
             meridian = meridianTest;
         }
 
-        console.log('hours', hours, '\nminutes', minutes, '\nseconds', seconds, '\nmeridian', meridian);
+        //console.log('hours', hours, '\nminutes', minutes, '\nseconds', seconds, '\nmeridian', meridian);
         document.getElementById("servertime").innerHTML = localTime;
         //certain time chunck of the hour
         if(!forceColor){
@@ -381,14 +401,15 @@
                     setClockTextColor('white');
                     setMessage('');
                 }
-            } else if (minutes === 1) {
+            } else if (minutes === 1 || breathMode === true) {
                     setBackgroundColor('aliceblue');
                     setClockTextColor('snow');
                     setMessageTextColor('snow');
-                    if (counterLoop(counter, 10) < 5) {
-                    setMessage('in');
+                    //https://www.alt-codes.net/latin-cross.php
+                if (isInBreath(counter, breathCycleLengthSec)){
+                    setMessage(') &#9766; (');
                 } else {
-                    setMessage('out');
+                    setMessage('( &#9766; )');
                 }
             } else if(homeMode){
                 	homeSchedule(hours, minutes, meridian);
